@@ -1,7 +1,7 @@
 package rohanaio;
 
 public class Settings {
-	private String url = "https://shopnicekicks.com/products/air-jordan-1-high-og-silver-toe-womens-lifestyle-shoe-black-silver";
+	private String url = "https://www.shoepalace.com/collections/launches/products/jordan-575441-134-air-jordan-retro-1-high-og-university-blue-grade-school-lifestyle-shoe-white-blue-limit-one-per-customer";
 	
 	private String webhook_url = "https://discord.com/api/webhooks/813671811418030101/yh15_gXSWx3y-P_N7Ro2jwNgTbLRHIRpSLzmPvLnYmkArpzGWVHei7xxcQqRn_5Hlwbx";
 	private int delay = 3500;

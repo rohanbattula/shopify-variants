@@ -23,6 +23,7 @@ public class ShopifyVariants {
 	private class Product {}
 	
 	private String url; 
+	private int stockTotal = 0; 
 	private String[] variants;
 	private OkHttpClient client = new OkHttpClient();
 	private Settings settings = new Settings();
@@ -40,24 +41,30 @@ public class ShopifyVariants {
 			
 			JsonObject jsonObject = new JsonParser().parse(jsonString).getAsJsonObject();
 			JsonArray vars = jsonObject.getAsJsonObject("product").getAsJsonArray("variants");
+			String title = jsonObject.getAsJsonObject("product").get("title").toString();
 			
 			variants = new String[vars.size()];
 			for(int i =0; i < vars.size(); i++) {
 				variants[i] = vars.get(i).getAsJsonObject().get("id").toString();
-				
+				stockTotal += (-1* vars.get(i).getAsJsonObject().get("inventory_quantity").getAsInt());
 			}
-	        Gson gson = new GsonBuilder().create();
-	        String varlist = gson.toJson(variants);
-	        sendToDiscord(varlist);
+			System.out.println(stockTotal);
+			sendToDiscord(title, variants, Integer.toString(stockTotal));
 		  }
 	}
 	
-	public void sendToDiscord(String varlist) throws IOException {
-		System.out.println(varlist);
+	public void sendToDiscord(String title, String[] variants, String stockTotal) throws IOException {
+		String varstr = "";
+		for(int i =0; i <variants.length; i++) {
+			varstr += variants[i];
+			varstr += "\n";
+		}
 		Settings settings = new Settings();
-		
-
-		
+		String content = varstr + "\nStock Total:\n" + stockTotal;
+		//content = "title here";
+		//String embeds = "[{\"title\": \"Variants\", \"description\": \"" + stockTotal + "\"}]";
+		String embeds = null;
+        String str2 = "{\"content\": \"" + content + "\", \"embeds\" : null, \"avatar_url\" : \"https://static.wikia.nocookie.net/paw-patrol/images/4/4d/Roughbough_puhp.png/revision/latest?cb=20140204033607\"}";
 		JsonObject jsonObject = new JsonParser().parse(str2).getAsJsonObject();
 
 		@SuppressWarnings("deprecation")
@@ -69,6 +76,7 @@ public class ShopifyVariants {
 		try(Response response = client.newCall(request).execute()){
 
 		}
+		
 	}
 	
 	
