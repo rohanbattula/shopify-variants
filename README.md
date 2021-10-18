@@ -8,6 +8,3 @@ Variants/stock may not always be loaded on backend in certain cases.
 
 To run, enter shopify product url and discord webhook in Settings.java, and run program in Main.
 
-
-Will add command line arg support once im not lazy xd this is a reminder
-
